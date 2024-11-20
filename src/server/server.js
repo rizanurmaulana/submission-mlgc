@@ -34,14 +34,12 @@ const InputError = require('../exceptions/InputError');
     }
 
     if (response.isBoom) {
-      if (response.statusCode === 413) {
-        return h
-          .response({
-            status: 'fail',
-            message: 'Payload content length greater than maximum allowed: 1000000',
-          })
-          .code(413);
-      }
+      return h
+        .response({
+          status: 'fail',
+          message: response.message,
+        })
+        .code(response.output.statusCode);
     }
 
     return h.continue;
