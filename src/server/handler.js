@@ -1,5 +1,6 @@
-const predictClassification = require('../services/inferenceService');
-const crypto = require('crypto');
+const predictClassification = require("../services/inferenceService");
+const crypto = require("crypto");
+const storeData = require("../services/storeData");
 
 const postPredictHandler = async (request, h) => {
   const { image } = request.payload;
@@ -10,16 +11,18 @@ const postPredictHandler = async (request, h) => {
   const createdAt = new Date().toISOString();
 
   const data = {
-    'id': id,
-    'result': label,
-    'suggestion': suggestion,
-    'createdAt': createdAt,
+    id: id,
+    result: label,
+    suggestion: suggestion,
+    createdAt: createdAt,
   };
+
+  await storeData(id, data);
 
   return h
     .response({
-      status: 'success',
-      message: 'Model is predicted successfully',
+      status: "success",
+      message: "Model is predicted successfully",
       data,
     })
     .code(201);
