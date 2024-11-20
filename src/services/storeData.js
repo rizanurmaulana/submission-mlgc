@@ -5,7 +5,7 @@ function storeData(id, data) {
     projectId: 'submissionmlgc-riza',
   });
 
-  const predictCollection = db.collection('prediction');
+  const predictCollection = db.collection('predictions');
   return predictCollection.doc(id).set(data)
 }
 
